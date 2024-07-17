@@ -13,7 +13,6 @@
 
 <script setup>
 let activeBlockSeqIndex = [];
-let isDeactivating = false;
 const deactivationThreshold = 7;
 const latency = 1000;
 
@@ -32,24 +31,18 @@ const blocks = ref([
 
 // activate a block and add its index to the sequence tracker.
 const activeBlockItem = (index) => {
-  if (isDeactivating) return;
-
   blocks.value[index].active = true;
   activeBlockSeqIndex.push(index);
 };
 
 // deactivate all blocks sequentially with a delay.
 const deactiveAllBlocks = async () => {
-  isDeactivating = true;
-
   while (activeBlockSeqIndex.length) {
     await delay(latency);
-    
+
     let lastItemIndex = activeBlockSeqIndex.pop();
     blocks.value[lastItemIndex].active = false;
   }
-
-  isDeactivating = false;
 };
 
 // create a delay
