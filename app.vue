@@ -43,8 +43,9 @@ const deactiveAllBlocks = async () => {
   isDeactivating = true;
 
   while (activeBlockSeqIndex.length) {
-    let lastItemIndex = activeBlockSeqIndex.pop();
     await delay(latency);
+    
+    let lastItemIndex = activeBlockSeqIndex.pop();
     blocks.value[lastItemIndex].active = false;
   }
 
